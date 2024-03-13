@@ -4,9 +4,9 @@ import { TorneoFormPages } from './pages/torneos/TorneoFormPage';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Teams from './pages/Teams';
-import Horarios from './pages/Horarios';
 import Partidos from './pages/Partidos';
 import { Toaster } from 'react-hot-toast';
+import Sorteos from './pages/Sorteos';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -18,8 +18,8 @@ const router = createBrowserRouter(
         <Route path='editar-equipo/:id' element={<Teams/>}/>
         <Route path='editar-jugador/:id' element={<Profile/>}/>
         <Route path='profile' element={<Profile />} />
-        <Route path='horario' element={<Horarios />} />
         <Route path='partidos' element={<Partidos />} />
+        <Route path='sorteos' element={<Sorteos />} />
       </Route>
 
   )

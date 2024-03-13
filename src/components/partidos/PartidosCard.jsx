@@ -50,7 +50,8 @@ export function PartidosCard({ partido }) {
               <Th border='1px solid'>Equipo visitante</Th>
               <Th border='1px solid'>Gol Local</Th>
               <Th border='1px solid'>Gol Visitante</Th>
-              <Th border='1px solid'>Horario</Th>
+              <Th border='1px solid'>Fecha</Th>
+              <Th border='1px solid'>hora</Th>
             </Tr>
           </Thead>
           <Tbody border='2px solid'>
@@ -59,7 +60,9 @@ export function PartidosCard({ partido }) {
               <Td>{equipoVisitante}</Td>
               <Td>{partido.gol_local}</Td>
               <Td>{partido.gol_visitante}</Td>
-              <Td>{horarioNombre}</Td>
+              <Td>{partido.fecha}</Td>
+              <Td>{partido.hora}</Td>
+
             </Tr>
           </Tbody>
           <Tfoot>

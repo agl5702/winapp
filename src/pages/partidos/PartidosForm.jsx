@@ -103,7 +103,7 @@ export function PartidosForm() {
                 </Select>
                 {errors.equipo && <span>Este campo es requerido</span>}
 
-                <FormLabel htmlFor='fecha'>Gol local</FormLabel>
+                <FormLabel htmlFor='gol_local'>Gol local</FormLabel>
                 <Input
                   type='number'
                   id='gol_local'
@@ -112,7 +112,7 @@ export function PartidosForm() {
                 />
                 {errors.gol_local && <span>Este campo es requerido</span>}
 
-                <FormLabel htmlFor='hora'>Gol visitante</FormLabel>
+                <FormLabel htmlFor='gol_visitante'>Gol visitante</FormLabel>
                 <Input
                   type='number'
                   id='gol_visitante'
@@ -122,20 +122,25 @@ export function PartidosForm() {
                 {errors.gol_visitante && <span>Este campo es requerido</span>}
                 
 
-                <FormLabel htmlFor='detalle'>Detalles</FormLabel>
-                <Textarea
-                  id='detalle'
-                  placeholder='Descripción'
-                  {...register('detalle', { required: true })}
+               
+                <FormLabel htmlFor='fecha'>Fecha</FormLabel>
+                <Input
+                  type='date'
+                  id='fecha'
+                  placeholder='fecha'
+                  {...register('fecha', { required: true })}
                 />
-                <FormLabel htmlFor='horario_partido'>Horario</FormLabel>
-                <Select placeholder='Selecciona el horario' {...register('horario_partido', { required: true })}>
-                  {horarios.map((horario) => (
-                    <option key={horario.id} value={horario.id}>
-                      {horario.fecha}
-                    </option>
-                  ))}
-                </Select>
+                {errors.gol_visitante && <span>Este campo es requerido</span>}
+
+                <FormLabel htmlFor='hora'>Hora</FormLabel>
+                <Input
+                  type='time'
+                  id='hora'
+                  placeholder='hora'
+                  {...register('hora', { required: true })}
+                />
+                {errors.gol_visitante && <span>Este campo es requerido</span>}
+
               </FormControl>
             </form>
           </DrawerBody>
