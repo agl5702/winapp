@@ -2,8 +2,8 @@ import { TorneoList } from '../components/torneos/TorneoList';
 import {Box, SimpleGrid, Text} from '@chakra-ui/react'
 import { TorneoFormPages } from './torneos/TorneoFormPage'
 import Torneo from '../components/torneos/Torneo'
-import img1 from '../assets/1.png';
-import img2 from '../assets/2.png';
+import img1 from '../assets/fondo11.webp';
+import img2 from '../assets/fondo12.webp';
 import {useAuth0} from '@auth0/auth0-react'
 import './font1.css'
 

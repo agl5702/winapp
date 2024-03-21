@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Carousel } from 'react-bootstrap';
-import img1 from '../../assets/fondo11.jpg';
-import img2 from '../../assets/fondo12.jpg';
-import img3 from '../../assets/fondo13.jpg';
+import img1 from '../../assets/fondo11.webp';
+import img2 from '../../assets/fondo12.webp';
+import img3 from '../../assets/fondo13.webp';
 
 const images = [img1, img2,img3];
 

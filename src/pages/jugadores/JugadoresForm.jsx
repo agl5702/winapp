@@ -24,21 +24,24 @@ export default function JugadoresForm() {
   const navigate = useNavigate();
   const params = useParams();
   console.log(params);
-
+  const [jugador, setJugador] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [equipos, setEquipos] = useState([]);
 
-  const [jugador, setJugador] = useState([]);
+
 
   const onSubmit = async (data) => {
     try {
       if (params.id) {
         console.log('actualizando');
         await actualizarJugador(params.id, data);
+        // Obtener los datos actualizados del jugador
+        const updatedPlayer = await getJugador(params.id);
+        // Actualizar el estado local del jugador con los datos actualizados
+        setJugador(updatedPlayer.data);
       } else {
         const res = await crearJugador(data);
       }
-
 
       // Cerrar el formulario después de guardar
       onClose();
@@ -56,19 +59,24 @@ export default function JugadoresForm() {
 
 
   useEffect(() => {
-
     async function loadJugador() {
       if (params.id) {
-        const { data: { id_jugador,nombre, numero_ficha,jugador_equipo } } = await getJugador(params.id);
-        setValue('id_jugador',id_jugador);
-        setValue('nombre', nombre);
-        setValue('numero_ficha', numero_ficha);
-        setValue('jugador_equipo',jugador_equipo);
-        // Open the form when params.id exists
-        onOpen();
+        try {
+          const { data: { id_jugador, nombre, numero_ficha, jugador_equipo } } = await getJugador(params.id);
+          setValue('id_jugador', id_jugador);
+          setValue('nombre', nombre);
+          setValue('numero_ficha', numero_ficha);
+          setValue('jugador_equipo', jugador_equipo);
+          // Open the form when params.id exists
+          onOpen();
+        } catch (error) {
+          console.error('Error al cargar el jugador:', error);
+        }
       }
     }
+  
     loadJugador();
+  
 
 
     const fetchEquipos = async () => {

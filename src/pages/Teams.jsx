@@ -2,8 +2,8 @@ import {EquiposList} from '../components/equipos/EquiposList'
 import { SimpleGrid, Box,Text } from "@chakra-ui/react";
 import EquiposForm from './equipos/EquiposForm'
 import Equipo from '../components/equipos/Equipos';
-import img1 from '../assets/equipo1.png';
-import img2 from '../assets/equipo2.png';
+import img1 from '../assets/9.webp';
+import img2 from '../assets/equipo2.webp';
 const images = [img1, img2];
 
 export default function Teams() {

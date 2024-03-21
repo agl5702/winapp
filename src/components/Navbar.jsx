@@ -13,16 +13,14 @@ import {
   DrawerCloseButton,
   DrawerHeader,
   DrawerBody,
-  DrawerFooter,
   useDisclosure,
   Heading, 
   Flex,
   Image
 } from '@chakra-ui/react';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
 import Sidebar from './Sidebar';
 import Image1 from '../assets/fondo7.jpg'
-const image2= [Image1]
 const images = [logo];
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();

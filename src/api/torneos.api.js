@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const torneoApi = axios.create({
-    baseURL: 'https://winapp-bwfw.onrender.com/'
-    // baseURL: 'http://localhost:8000/' //que no tenga la 's' el http 
+    // baseURL: 'https://winapp-bwfw.onrender.com/'
+    baseURL: 'http://localhost:8000/' //que no tenga la 's' el http 
 })
 
 // Peticiones get

@@ -2,8 +2,8 @@ import { SimpleGrid, Box } from "@chakra-ui/react";
 import { PartidosList } from '../components/partidos/PartidosList'
 import {PartidosForm} from "./partidos/PartidosForm";
 import Partido from "../components/partidos/Partidos";
-import img1 from '../assets/sorteo1.png';
-import img2 from '../assets/sorteo2.png';
+import img1 from '../assets/sorteo1.webp';
+import img2 from '../assets/sorteo2.webp';
 
 
 const images = [img1, img2];
