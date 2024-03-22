@@ -1,4 +1,4 @@
-import { Input, VStack, Button, Box, TableContainer, Table, Thead, Tr, Th, Td, Tbody, Tfoot } from '@chakra-ui/react';
+import { Input, VStack, Button, Box, TableContainer, Table, Thead, Tr, Th, Td, Tbody } from '@chakra-ui/react';
 import { useState } from 'react';
 
 export default function ListSorteo() {
