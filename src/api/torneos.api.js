@@ -21,15 +21,15 @@ export const getJugador=(id)=> torneoApi.get(`/equipo_jugador/jugadores/${id}/`)
 
 
 // Peticion get de todos los equipos
-export const getallEquipos= ()=> torneoApi.get('equipo_jugador/equipos/')
+export const getallEquipos= ()=> torneoApi.get('/equipo_jugador/equipos/')
 
 // Peticion get de todos los jugadores
-export const getallJugadores= ()=> torneoApi.get('equipo_jugador/jugadores/')
+export const getallJugadores= ()=> torneoApi.get('/equipo_jugador/jugadores/')
 
 // Peticion get de todos los partidos
-export const getallHorarios= ()=> torneoApi.get('partidos_horarios/horario/')
+export const getallHorarios= ()=> torneoApi.get('/partidos_horarios/horario/')
 
-export const getallPartidos= ()=> torneoApi.get('partidos_horarios/partido/')
+export const getallPartidos= ()=> torneoApi.get('/partidos_horarios/partido/')
 
 
 
