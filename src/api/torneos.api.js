@@ -76,7 +76,13 @@ export const eliminarJugador = (id)=> torneoApi.delete(`equipo_jugador/jugadores
 export const actualizarTorneo= (id, torneo)=> torneoApi.put(`torneoapp/torneos/${id}/`,torneo)
 
 //Peticion para actualizar Jugadores
-export const actualizarJugador= (id, jugador)=> torneoApi.put(`equipo_jugador/jugadores/${id}/`,jugador)
+export const actualizarJugador = (id, jugador) => {
+    const data = {
+        ...jugador,
+        jugador_equipo: [jugador.jugador_equipo], // Convertir a lista
+    };
+    return torneoApi.put(`equipo_jugador/jugadores/${id}/`, data);
+};
 
 
 //Peticion para actualizar Equipos
