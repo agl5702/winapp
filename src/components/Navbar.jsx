@@ -36,8 +36,8 @@ export default function Navbar() {
       
 
         <Box display='flex' alignItems='center' alignContent='center'>
-        {isAuthenticated ?<LogoutButton/>
-        :<LoginButton/>}
+        {/* {isAuthenticated ?<LogoutButton/>
+        :<LoginButton/>} */}
        
         <Button display={{lg:'none', base:'flex'}} m='10px' leftIcon={<FaBars />} color='black' onClick={onOpen} alignItems='center'>
       </Button>
