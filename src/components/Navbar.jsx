@@ -30,7 +30,7 @@ export default function Navbar() {
   return (
     <Flex  bgGradient='linear(to-r, white,blue.200,#2A4365)' as='nav' p='10px' justify='space-between' maxH='100px' wrap='wrap' gap='2' margin='auto' alignItems='center' boxShadow='2xl' border='none'> 
         <Heading alignItems='center' display='flex' as='h1' textAlign='left' fontSize='50px'>Win Soft
-        <Image  width='100px' my='0' src={images} alt=""/>
+        <Image  width='80px' my='0' src={images} alt=""/>
         </Heading>
         
       
@@ -39,7 +39,7 @@ export default function Navbar() {
         {isAuthenticated ?<LogoutButton/>
         :<LoginButton/>}
        
-        <Button display={{lg:'none', base:'flex'}} m='15px' leftIcon={<FaBars />} color='black' onClick={onOpen} alignItems='center'>
+        <Button display={{lg:'none', base:'flex'}} m='10px' leftIcon={<FaBars />} color='black' onClick={onOpen} alignItems='center'>
       </Button>
         <Drawer isOpen={isOpen} placement='right' onClose={() => { onClose(); navigate('/'); }}>
         <DrawerOverlay />
