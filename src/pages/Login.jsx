@@ -79,10 +79,10 @@ function Login() {
           </FormControl>
           <Box display='flex' flexDirection='row' justifyContent='space-around'>
           <NavLink to="/register">
-            <Text mx='10px' color='#1023DF' _hover={{color: 'white'}}>Registrate aquí</Text>
+            <Text mx='10px' color='white' _hover={{color: 'blue.300'}}>Registrate aquí</Text>
           </NavLink>
           <NavLink to="/reset-password">
-            <Text mx='10px' color='#1023DF' _hover={{color: 'white'}}>¿Olvidaste tu contraseña?</Text>
+            <Text mx='10px' color='white' _hover={{color: 'blue.300'}}>¿Olvidaste tu contraseña?</Text>
           </NavLink>
           </Box>
           <Button type='submit' display='flex' color='white' margin='auto' bg='green.300' colorScheme='blue' my='20px' w='xs'>

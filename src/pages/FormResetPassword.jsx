@@ -101,7 +101,7 @@ function FormResetPassword() {
             {error && <span style={{ color: 'red' }}>{error}</span>}
           </FormControl>
           <NavLink to="/login">
-            <Text mx='40px' color='#1023DF' _hover={{color:'white'}}>¿Ya tienes una cuenta?</Text>
+            <Text mx='40px'color='white' _hover={{color: 'blue.300'}}>¿Ya tienes una cuenta?</Text>
           </NavLink>
           <Button type='submit' display='flex' color='white' margin='auto' bg='green.300' colorScheme='blue' my='20px' w='xs'>
             Entrar
