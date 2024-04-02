@@ -9,7 +9,7 @@ export function JugadoresCard({ jugador }) {
   const [equipoNombre, setEquipoNombre] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-
+  const navigate = useNavigate();
   const handleEliminar = async () => {
     await eliminarJugador(jugador.id_jugador);
     onClose();
@@ -21,7 +21,7 @@ export function JugadoresCard({ jugador }) {
         position: 'bottom-right'
       });
   };
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     // Función asincrónica para obtener el nombre del equipo
@@ -45,10 +45,9 @@ export function JugadoresCard({ jugador }) {
       <Card m='auto' boxShadow='2xl' w={{ base: 'sm', lg: 'sm' }}
         my='10px'
         d='flex'
-        textAlign='center'
         flexDirection={{ base: 'column', lg: 'column' }}
         alignItems={{ lg: 'center' }}
-        maxW={{ base: 'sm', lg: 'sm' }}
+        maxW={{ base: 'xs', lg: 'xs' }}
         minHeight='300px'
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'

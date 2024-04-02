@@ -19,9 +19,9 @@ useEffect(()=> {
 
     return (
         <Box display='flex' flexDirection={{base: 'column', lg:'row'}} flexWrap='wrap' gap={2} justifyContent='space-around' alignItems='center'>
-        {torneos.map((torneo) => (
-          <TorneoCard key={torneo.id} torneo={torneo} />
-        ))}
+        {torneos && torneos.map((torneo) => (
+        <TorneoCard key={torneo.id} torneo={torneo} />
+      ))}
       </Box>
     );
 }

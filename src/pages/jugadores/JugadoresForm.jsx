@@ -23,7 +23,7 @@ export default function JugadoresForm() {
   const { register, handleSubmit, formState: { errors },setValue, reset } = useForm();
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params);
+  // console.log(params);
   const [jugador, setJugador] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [equipos, setEquipos] = useState([]);
@@ -33,7 +33,7 @@ export default function JugadoresForm() {
   const onSubmit = async (data) => {
     try {
       if (params.id) {
-        console.log('actualizando');
+        // console.log('actualizando');
         await actualizarJugador(params.id, data);
         // Obtener los datos actualizados del jugador
         const updatedPlayer = await getJugador(params.id);
@@ -51,7 +51,7 @@ export default function JugadoresForm() {
       navigate('/profile');
       window.location.reload();
     } catch (error) {
-      console.error('Error al guardar el torneo:', error);
+      console.error('Error al guardar el jugador:', error);
       console.log('Detalles del error:', error.response.data);
       console.log('Objeto error completo:', error);
     }
@@ -62,7 +62,7 @@ export default function JugadoresForm() {
     async function loadJugador() {
       if (params.id) {
         try {
-          const { data: { id_jugador, nombre, numero_ficha, jugador_equipo } } = await getJugador(params.id);
+          const { data: { id_jugador, nombre, numero_ficha,jugador_equipo } } = await getJugador(params.id);
           setValue('id_jugador', id_jugador);
           setValue('nombre', nombre);
           setValue('numero_ficha', numero_ficha);
@@ -127,7 +127,7 @@ export default function JugadoresForm() {
                 {errors.id_jugador && <span>Este campo es requerido</span>}
 
                 <FormLabel htmlFor='equipo'>Equipo</FormLabel>
-                <Select placeholder='Selecciona el equipo' {...register('jugador_equipo', { required: true })}>
+                <Select placeholder='Selecciona el equipo' defaultValue={jugador.jugador_equipo} {...register('jugador_equipo', { required: true })}>
                   {equipos.map((equipo) => (
                     <option key={equipo.id} value={equipo.id}>
                       {equipo.nombre}

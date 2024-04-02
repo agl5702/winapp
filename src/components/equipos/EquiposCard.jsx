@@ -57,8 +57,8 @@ export function EquiposCard({equipo}){
       textAlign='center'
       flexDirection={{base: 'column', lg: 'column'}}
       alignItems={{lg:'center'}}
-      maxW={{base: 'sm', lg: 'sm'}}
-      minHeight='450px'
+      maxW={{base: 'xs', lg: 'xs'}}
+      minHeight='350px'
       maxH='100%'
       direction={{ base: 'column', sm: 'column' }}
       overflow='hidden'
@@ -72,7 +72,7 @@ export function EquiposCard({equipo}){
     <CardBody>
       <Heading size='lg' color='blue.500'>{equipo.nombre}</Heading>
       
-      <Heading size='sm' mt='10px' textAlign='justify'> {equipo.detalles}</Heading>
+      <Heading size='sm' mt='10px' textAlign='justify' > {equipo.detalles}</Heading>
       <Heading size='sm' mt='10px' textAlign='justify' color='green'>{torneoNombre}</Heading>
     </CardBody>
   </Stack>

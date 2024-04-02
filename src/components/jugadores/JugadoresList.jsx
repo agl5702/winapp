@@ -21,7 +21,7 @@ useEffect(()=> {
 
         <Box display='flex' flexDirection={{base: 'column', lg:'row'}} flexWrap='wrap' gap={2} justifyContent='space-around' alignItems='center'>
             {jugadores.map(jugador =>(
-             <JugadoresCard key={jugador.id} jugador={jugador}/>
+             <JugadoresCard key={jugador.id_jugador} jugador={jugador}/>
             ))}  
         </Box>
     );

@@ -1,9 +1,163 @@
 import axios from 'axios'
 
 const torneoApi = axios.create({
-     baseURL: 'https://winapp-bwfw.onrender.com/'
-    // baseURL: 'http://localhost:8000/' //que no tenga la 's' el http 
-})
+    //  baseURL: 'https://winapp-bwfw.onrender.com/'
+    baseURL: 'http://localhost:8000/', //que no tenga la 's' el http 
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+
+const getAccessToken = () => localStorage.getItem('access_token');
+
+const setAccessToken = (config) => {
+    const accessToken = getAccessToken();
+    if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+};
+
+const getRefreshToken = () => localStorage.getItem('refresh_token');
+
+const refreshToken = () => {
+    const refreshToken = getRefreshToken();
+    return torneoApi.post('api/token/refresh/', { refresh: refreshToken })
+        .then(response => {
+            const newAccessToken = response.data.access;
+            const newRefreshToken = response.data.refresh;
+            localStorage.setItem('access_token', newAccessToken);
+            localStorage.setItem('refresh_token',newRefreshToken);
+            return newAccessToken;
+        })
+        .catch(error => {
+            console.error('Error al renovar el token de acceso:', error);
+            throw error;
+        });
+};
+
+let isRefreshing = false;
+let refreshPromise = null;
+
+torneoApi.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+            if (!isRefreshing) {
+                isRefreshing = true;
+                refreshPromise = refreshToken()
+                    .then(newAccessToken => {
+                        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                        return axios(originalRequest);
+                    })
+                    .catch(error => {
+                        throw error; // Si falla la renovación, rechazar la solicitud original
+                    })
+                    .finally(() => {
+                        isRefreshing = false;
+                        refreshPromise = null;
+                    });
+            }
+            return refreshPromise;
+        }
+        return Promise.reject(error);
+    }
+);
+
+// Función para manejar errores de solicitud
+const handleRequestError = (error) => {
+    console.error('Error en la solicitud:', error);
+    throw error;
+};
+
+// Interceptores de Axios para manejar errores de solicitud
+torneoApi.interceptors.response.use((response) => response, handleRequestError);
+
+// Interceptores de Axios para agregar el token de acceso a todas las solicitudes
+torneoApi.interceptors.request.use(setAccessToken);
+
+export const login = (username, password) => {
+    // Datos de inicio de sesión
+    const data = {
+        username: username,
+        password: password
+    };
+
+    // Realizar la solicitud de login
+    return torneoApi.post('login/', data)
+        .then(response => {
+            // Devolver toda la respuesta del servidor
+            return response.data;
+        })
+        .catch(error => {
+            // Manejar errores si la solicitud de login falla
+            throw error;
+        });
+};
+export const registeruser= (username,email,password,re_password) => {
+    const data={
+        username: username,
+        email: email,
+        password: password,
+        re_password: re_password
+    }
+    return torneoApi.post('usuario/usuario/',data)
+        .then(response=>{
+            return response.data;
+        })
+        .catch(error=>{
+
+            throw error;
+        });
+};
+export const logout = async () => {
+    const accessToken = localStorage.getItem('access_token');
+    try {
+      await torneoApi.post('logout/', null, { headers: { Authorization: `Bearer ${accessToken}` } });
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('info_user');
+      
+    } catch (error) {
+      console.error('Error al realizar el logout:', error);
+      // Puedes mostrar un mensaje de error al usuario si lo deseas
+    }
+  };
+export const verifyUserEmail = (email) => {
+    const data={
+        email: email,
+    }
+    return torneoApi.post('usuario/verificar-usuario/',data)
+    
+        .then(response=>{
+            console.log(response.data);
+            const saveId = response.data.id;
+            localStorage.setItem('user_id', saveId);
+            return response.data;
+            
+        })
+        .catch(error=>{
+
+            throw error;
+        });
+};
+
+export const updateUser = (password,re_password,username,email) =>{
+    const id = localStorage.getItem('user_id')
+    
+    const data = {
+        password:password,
+        re_password: re_password,
+        username: username,
+        email: email,
+    }
+    return torneoApi.put(`usuario/usuario/${id}/`,data)
+}
+
+
+
 
 // Peticiones get
 
@@ -77,9 +231,10 @@ export const actualizarTorneo= (id, torneo)=> torneoApi.put(`torneoapp/torneos/$
 
 //Peticion para actualizar Jugadores
 export const actualizarJugador = (id, jugador) => {
+
     const data = {
         ...jugador,
-        jugador_equipo: [jugador.jugador_equipo], // Convertir a lista
+        jugador_equipo: [jugador.jugador_equipo[0]], // Convertir a lista
     };
     return torneoApi.put(`equipo_jugador/jugadores/${id}/`, data);
 };

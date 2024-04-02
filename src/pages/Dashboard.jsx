@@ -1,17 +1,14 @@
 import { TorneoList } from '../components/torneos/TorneoList';
 import {Box, SimpleGrid, Text} from '@chakra-ui/react'
-import { TorneoFormPages } from './torneos/TorneoFormPage'
+import  {TorneoFormPages}  from '../pages/torneos/TorneoFormPage'
 import Torneo from '../components/torneos/Torneo'
 import img1 from '../assets/fondo11.webp';
 import img2 from '../assets/fondo12.webp';
-import {useAuth0} from '@auth0/auth0-react'
 import './font1.css'
-
 const images = [img1, img2];
 
 
 export default function Dashboard() {
-  const {user,isAuthenticated}= useAuth0();
 
 
   return ( 
@@ -21,17 +18,6 @@ export default function Dashboard() {
           <Torneo images={images}/>
           </Box>
 
-          {isAuthenticated ? (
-          <Text mt='30px' textAlign='center' fontFamily='DM Serif Display' fontSize='20px'>
-            Bienvenido {user ? user.given_name : 'Invitado'}
-          </Text>
-        ) : (
-          <Text mt='30px' textAlign='center' fontFamily='DM Serif Display' fontSize='20px'>
-            Bienvenido Invitado
-          </Text>
-        )}
-
-          
           <TorneoFormPages/>
           <Text textAlign='center' fontFamily='DM Serif Display' fontSize='50px'>Torneos</Text>
           

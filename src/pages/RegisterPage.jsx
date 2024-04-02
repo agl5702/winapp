@@ -1,62 +1,129 @@
-import { Flex, Box, Image, Input, FormLabel, FormControl, Button, Link } from "@chakra-ui/react";
+import { useState } from 'react';
+import { FormControl, Input, FormLabel, Button, Box,Text } from "@chakra-ui/react";
+import { useNavigate,NavLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { createUser } from "../api/torneos.api";
-import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import { registeruser, login } from "../api/torneos.api";
+import logo from '../assets/logo.webp';
+import './login.css';
 
-export default function RegisterPage() {
+function RegisterPage() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const navigate = useNavigate();
-  
-    const onSubmit = async (data) => {
-        try {
-            const response = await createUser(data);
-            if (response.status === 201) {
-                // Si el usuario se crea correctamente, redirigir al dashboard
-                navigate('/');
-            } else {
-                console.error('Error al iniciar sesión:', response.data.detail);
-            }
-        } catch (error) {
-            console.error('Error al iniciar sesión:', error);
+  const onSubmit = async (data) => {
+    try {
+      const response = await registeruser(data.username, data.email, data.password, data.re_password);
+      try {
+        const loginResponse = await login(data.username, data.password);
+        if (loginResponse) {
+          // Almacenar los tokens en el localStorage
+          localStorage.setItem('access_token', loginResponse.token);
+          localStorage.setItem('refresh_token', loginResponse['refresh-token']);
+          localStorage.setItem('info_user', JSON.stringify(loginResponse.user));
+          console.log('Login exitoso');
+          console.log('Token de acceso:', loginResponse.token);
+          console.log('Token de actualización:', loginResponse['refresh-token']);
+          navigate('/');
+        } else {
+          console.error('Error al iniciar sesión después del registro');
+          setError('Error al iniciar sesión después del registro'); // Informar al usuario del error
         }
-    };
-
-
-
+      } catch (error) {
+        console.error('Error al iniciar sesión después del registro:', error.message);
+        setError('Error al iniciar sesión después del registro'); // Informar al usuario del error
+      }
+    } catch (error) {
+      console.error('Error al registrar:', error.message);
+      setError('Error al registrar'); // Informar al usuario del error
+    }
+  };
 
   return (
-    <Flex bgGradient='linear(to-r,#2A4365,blue.200,blue.100)' w='100vw' minH='100vh' justify='center' alignItems='center' position='relative'>
-      <Image src={logo} w='600px' opacity='0.8' position='absolute' left='50%' transform='translateX(-50%)' top='0px' zIndex='1' />
-      <Box maxW='400px' w='100%' p='6' bg='#151A18' borderRadius='xl' boxShadow='lg' zIndex='2' mt='100px'>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl>
-            <FormLabel textAlign='center' color='white' fontSize='25px'>Nombre</FormLabel>
-            <Input {...register("first_name")} m='auto' color='black' bg='white' placeholder='Ingrese su nombre de usuario' />
+    <Box mx='auto' my='0%' display="flex"
+      justifyContent="center"
+      alignItems="center"
+      height="100vh"
+      borderRadius='md'
+      bgGradient='linear(to-l, white,blue.200,#2A4365)'
+    >
+      <Box bgGradient='linear(to-b, #151A18, #3D3F3E)' w='400px' borderRadius='5%' marginTop='120px' zIndex='2'>
+        <form onSubmit={handleSubmit(onSubmit)} method="post">
+          <FormControl display='flex' flexDirection='column' m='auto' my='20px'>
+            <FormLabel htmlFor='nombre' mx='40px' color='white'>Nombre</FormLabel>
+            <Input
+              w='xs'
+              m='auto'
+              color='black'
+              bgColor='white'
+              id='nombre'
+              placeholder='nombre de usuario'
+              {...register('username', { required: true })}
+            />
+            {errors.username && <span>Este campo es requerido</span>}
+            <FormLabel htmlFor='email' mx='40px' color='white'>Correo Electrónico</FormLabel>
+            <Input
+              w='xs'
+              m='auto'
+              color='black'
+              bgColor='white'
+              id='email'
+              placeholder='correo electrónico'
+              {...register('email', { required: true })}
+            />
+            {errors.email && <span>Este campo es requerido</span>}
+            <FormLabel htmlFor='contraseña' mx='40px' color='white'>Contraseña</FormLabel>
+            <Input
+              w='xs'
+              m='auto'
+              color='black'
+              bgColor='white'
+              type='password'
+              id='password'
+              placeholder='contraseña'
+              {...register('password', { required: true })}
+            />
+            {errors.password && <span>Este campo es requerido</span>}
+            <FormLabel htmlFor='contraseña-confirmar' mx='40px' color='white'>Confirmar Contraseña</FormLabel>
+            <Input
+              w='xs'
+              m='auto'
+              color='black'
+              bgColor='white'
+              type='password'
+              id='contraseña-confirmar'
+              placeholder='confirmar contraseña'
+              {...register('re_password', { required: true })}
+            />
+            {errors.re_password && <span>Este campo es requerido</span>}
+            {error && <span style={{ color: 'red' }}>{error}</span>}
           </FormControl>
-
-          <FormControl mt='4'>
-            <FormLabel color='white' textAlign='center' fontSize='25px'>Apellido</FormLabel>
-            <Input {...register("last_name")} m='auto' color='black' bg='white' placeholder='Ingrese su contraseña' />
-          </FormControl>
-          <FormControl mt='4'>
-            <FormLabel color='white' textAlign='center' fontSize='25px'>Correo Electrónico</FormLabel>
-            <Input {...register("email")} m='auto' type="email" color='black' bg='white' placeholder='Ingrese su contraseña' />
-          </FormControl>
-          <FormControl mt='4'>
-            <FormLabel color='white' textAlign='center' fontSize='25px'>Contraseña</FormLabel>
-            <Input {...register("password")} m='auto' type='password' color='black' bg='white' placeholder='Ingrese su contraseña' />
-          </FormControl>
-          <FormControl mt='4'>
-            <FormLabel color='white' textAlign='center' fontSize='25px'>Confirmar Contraseña</FormLabel>
-            <Input {...register("re_password")} m='auto' type='password' color='black' bg='white' placeholder='Ingrese su contraseña' />
-          </FormControl>
-          <Button mt='8' colorScheme='teal' variant='solid' type="submit" w='100%'>Entrar</Button>
+          <NavLink to="/login">
+            <Text mx='40px' color='#1023DF' _hover={{color:'white'}}>¿Ya tienes una cuenta?</Text>
+          </NavLink>
+          <Button type='submit' display='flex' color='white' margin='auto' bg='green.300' colorScheme='blue' my='20px' w='xs'>
+            Entrar
+          </Button>
         </form>
-
-        <Link color='blue.300' href="/register" _hover={{color:'white'}} >Registrate aquí</Link>
       </Box>
-    </Flex>
+      <img
+        src={logo}
+        style={{
+          width: '400px',
+          position: 'absolute',
+          top: '0',
+          left: 'calc(50% - 200px)',
+          transform: 'translateX(-50%)',
+          zIndex: '1',
+          animationName: 'fly-animation',
+          animationDuration: '5s',
+          animationTimingFunction: 'ease-in-out',
+          animationIterationCount: 'infinite',
+        }}
+        alt="Logo"
+      />
+    </Box>
   );
 }
+
+export default RegisterPage;

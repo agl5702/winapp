@@ -37,7 +37,8 @@ export function TorneoCard({torneo}){
     return <div>
       <Card 
       bg='gray.300' m='auto' borderTop='8px solid' borderTopColor='black.400'
-      my='10px' maxW='sm' minW='sm'
+      // cambiar la medida....
+      my='10px' maxW={{lg:'xs'}} minW={{lg:'xs'}} 
       maxHeight='320px'  minHeight='320px'
       height='100%'
       boxShadow='2xl' gap={2} flexWrap='wrap' w='350px' 
@@ -69,7 +70,7 @@ export function TorneoCard({torneo}){
         
       </Flex>
     
-      <Text>
+      <Text textAlign='justify' >
         {torneo.descripcion}
       </Text>
     </CardBody>
@@ -83,14 +84,14 @@ export function TorneoCard({torneo}){
         },
       }}
     >
-      <Button  boxShadow='2xl' mx='1' bg='green.300' flex='1' variant='ghost' onClick={
+      <Button w='50px'  boxShadow='2xl' mx='1' bg='green.300' flex='1' variant='ghost' onClick={
       ()=>{
         navigate('/editar/' + torneo.id)
       }      
      } >
         Editar
       </Button>
-      <Button  boxShadow='2xl' mx='1' bg='orange.200' flex='1' variant='ghost' onClick={onOpen}>
+      <Button  w='50px'  boxShadow='2xl' mx='1' bg='orange.200' flex='1' variant='ghost' onClick={onOpen}>
         Eliminar
       </Button>
       <AlertDialog

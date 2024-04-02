@@ -25,7 +25,6 @@ export function TorneoFormPages() {
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm();
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [redirect, setRedirect] = useState(false);
